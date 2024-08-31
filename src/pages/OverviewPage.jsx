@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Barcode from "react-barcode";
 
 const OverviewPage = () => {
   const [formData, setFormData] = useState({
@@ -9,9 +8,8 @@ const OverviewPage = () => {
     productName: "",
   });
 
-  const [barcode, setBarcode] = useState(""); // State to manage the barcode
-  const navigate = useNavigate(); // Hook to navigate programmatically
-
+  const [barcode, setBarcode] = useState("");
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -23,8 +21,7 @@ const OverviewPage = () => {
   };
 
   const generateBarcode = () => {
-    setBarcode(formData.productName); // Generate barcode from productName
-    // Navigate to ProductPage and pass barcode data and formData
+    setBarcode(formData.productName);
     navigate("/products", {
       state: { barcode: formData.productName, formData },
     });
