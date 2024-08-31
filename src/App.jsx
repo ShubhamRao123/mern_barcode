@@ -9,14 +9,7 @@ const App = () => {
     <div className="flex flex-col h-screen bg-gray-900 text-gray-100 overflow-hidden">
       <Navbar />
 
-      {/* <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0"></div>
-        <div className="absolute inset-0"></div>
-      </div>
-      <SIdebar /> */}
-
       <div className="flex flex-grow">
-        {/* Sidebar - Fixed width and full height */}
         <div className=" bg-gray-800 h-full">
           <SIdebar />
         </div>
