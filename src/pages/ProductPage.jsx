@@ -1,14 +1,16 @@
 import React, { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Barcode from "react-barcode";
+import Barcode from "react-barcode"; // Ensure you have installed this package
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import FormData from "../component/FormData";
 
 const ProductPage = () => {
   const location = useLocation();
+  const barcode = location.state?.barcode || ""; // Retrieve barcode from state
   const barcodeRef = useRef(null);
 
+  // State for process statuses
   const [statusItems, setStatusItems] = useState([
     { label: "Entry Data", status: "ok" },
     { label: "Fetch Data", status: "ok" },
