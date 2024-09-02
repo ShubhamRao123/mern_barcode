@@ -19,8 +19,8 @@ const SIDEBAR_ITEMS = [
     color: "#6366f1",
     href: "/",
   },
-  { name: "Option1", icon: ShoppingBag, color: "#8B5CF6", href: "/barcode" },
-  { name: "Option2", icon: Users, color: "#EC4899", href: "/analytics" },
+  { name: "Barcode", icon: ShoppingBag, color: "#8B5CF6", href: "/barcode" },
+  { name: "Analytics", icon: Users, color: "#EC4899", href: "/analytics" },
   { name: "Option3", icon: DollarSign, color: "#10B981", href: "/overview" },
   {
     name: "Option4",
