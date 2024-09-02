@@ -1,45 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useProgress } from "../component/ProgressContext";
 
-const OverviewPage = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    product: "",
-  });
-
-  const [barcode, setBarcode] = useState("");
+const Sender = () => {
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
+  const { updateProgress, updateFormData } = useProgress();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-
-    const barcode = formData.product;
-
-    const userData = { ...formData, barcode };
-
-    axios
-      .post("http://localhost:3001/createUser", userData)
-      .then((result) => console.log(result))
-      .catch((err) => console.log(err));
-  };
-
-  const generateBarcode = () => {
-    setBarcode(formData.product);
-
-    navigate("/products", {
-      state: { barcode: formData.product, formData },
-    });
+    const formData = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      product: e.target.product.value,
+      address: e.target.address.value,
+    };
+    updateFormData("sender", formData);
+    updateProgress("sender");
+    navigate("/receiver");
   };
 
   return (
@@ -59,14 +36,11 @@ const OverviewPage = () => {
                 type="text"
                 id="name"
                 name="name"
-                value={formData.name}
-                onChange={handleChange}
                 className="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Enter your name"
                 required
               />
             </div>
-
             <div className="mb-4">
               <label
                 className="block text-sm font-medium text-white mb-2"
@@ -78,14 +52,11 @@ const OverviewPage = () => {
                 type="email"
                 id="email"
                 name="email"
-                value={formData.email}
-                onChange={handleChange}
                 className="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Enter your email"
                 required
               />
             </div>
-
             <div className="mb-4">
               <label
                 className="block text-sm font-medium text-white mb-2"
@@ -97,27 +68,33 @@ const OverviewPage = () => {
                 type="text"
                 id="product"
                 name="product"
-                value={formData.product}
-                onChange={handleChange}
                 className="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Enter product name"
                 required
               />
             </div>
-
+            <div className="mb-4">
+              <label
+                className="block text-sm font-medium text-white mb-2"
+                htmlFor="address"
+              >
+                Address
+              </label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                className="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Enter Address"
+                required
+              />
+            </div>
             <div className="flex gap-4">
               <button
                 type="submit"
                 className="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700 transition-colors"
               >
-                Submit
-              </button>
-              <button
-                type="button"
-                className="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700 transition-colors"
-                onClick={generateBarcode}
-              >
-                Generate Barcode
+                Next
               </button>
             </div>
           </form>
@@ -127,4 +104,4 @@ const OverviewPage = () => {
   );
 };
 
-export default OverviewPage;
+export default Sender;
