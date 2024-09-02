@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProgress } from "../component/ProgressContext";
 
 const Shipment = () => {
   const navigate = useNavigate();
   const { updateProgress, updateFormData } = useProgress();
+  const [errors, setErrors] = useState({});
+
+  const validateForm = (formData) => {
+    let errors = {};
+    if (!formData.shipmentName)
+      errors.shipmentName = "Shipment name is required";
+    if (!formData.address) errors.address = "Address is required";
+    return errors;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,11 +22,16 @@ const Shipment = () => {
       address: e.target.address.value,
     };
 
-    // Update form data and progress
+    const validationErrors = validateForm(formData);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({});
     updateFormData("shipment", formData);
     updateProgress("shipment");
-
-    // Navigate to the Tracking page
     navigate("/tracking");
   };
 
@@ -40,10 +54,18 @@ const Shipment = () => {
                 type="text"
                 id="shipmentName"
                 name="shipmentName"
-                className="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className={`w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 ${
+                  errors.shipmentName
+                    ? "focus:ring-red-500"
+                    : "focus:ring-indigo-500"
+                }`}
                 placeholder="Enter shipment name"
-                required
               />
+              {errors.shipmentName && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.shipmentName}
+                </p>
+              )}
             </div>
             <div className="mb-4">
               <label
@@ -56,10 +78,16 @@ const Shipment = () => {
                 type="text"
                 id="address"
                 name="address"
-                className="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className={`w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 ${
+                  errors.address
+                    ? "focus:ring-red-500"
+                    : "focus:ring-indigo-500"
+                }`}
                 placeholder="Enter address"
-                required
               />
+              {errors.address && (
+                <p className="text-red-500 text-sm mt-1">{errors.address}</p>
+              )}
             </div>
             <div className="flex gap-4">
               <button
