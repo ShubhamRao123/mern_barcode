@@ -3,6 +3,7 @@ import OverviewPage from "./pages/OverviewPage";
 import ProductPage from "./pages/ProductPage";
 import Navbar from "./component/Navbar";
 import SIdebar from "./component/SIdebar";
+import UpdatePage from "./pages/UpdatePage";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<OverviewPage />} />
           <Route path="/products" element={<ProductPage />} />
+          <Route path="/update" element={<UpdatePage />} />
         </Routes>
       </div>
     </div>

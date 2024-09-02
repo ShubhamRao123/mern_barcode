@@ -1,12 +1,14 @@
+// OverviewPage.jsx
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Barcode from "react-barcode";
+import axios from "axios";
 
 const OverviewPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    productName: "",
+    product: "", // Changed from productName to product to match the backend
   });
 
   const [barcode, setBarcode] = useState(""); // State to manage the barcode
@@ -14,19 +16,35 @@ const OverviewPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+
+    // Generate barcode from product (or any other logic you have)
+    const barcode = formData.product;
+
+    // Include barcode in the form data
+    const userData = { ...formData, barcode };
+
+    // Send the request to create a user with the barcode
+    axios
+      .post("http://localhost:3001/createUser", userData)
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
   };
 
   const generateBarcode = () => {
-    setBarcode(formData.productName); // Generate barcode from productName
+    setBarcode(formData.product); // Generate barcode from product name
+
     // Navigate to ProductPage and pass barcode data and formData
     navigate("/products", {
-      state: { barcode: formData.productName, formData },
+      state: { barcode: formData.product, formData },
     });
   };
 
@@ -83,15 +101,15 @@ const OverviewPage = () => {
             <div className="mb-4">
               <label
                 className="block text-sm font-medium text-white mb-2"
-                htmlFor="productName"
+                htmlFor="product"
               >
                 Product Name
               </label>
               <input
                 type="text"
-                id="productName"
-                name="productName"
-                value={formData.productName}
+                id="product"
+                name="product"
+                value={formData.product}
                 onChange={handleChange}
                 className="w-full px-3 py-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Enter product name"
@@ -108,7 +126,7 @@ const OverviewPage = () => {
                 Submit
               </button>
               <button
-                type="button" // Change type to button to avoid form submission
+                type="button"
                 className="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700 transition-colors"
                 onClick={generateBarcode}
               >
