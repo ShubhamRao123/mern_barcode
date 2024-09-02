@@ -29,7 +29,7 @@ const UpdatePage = () => {
     }));
   };
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     console.log("Form updated:", formData);
 
@@ -37,20 +37,22 @@ const UpdatePage = () => {
     const updatedBarcode = formData.product;
     const updatedData = { ...formData, barcode: updatedBarcode };
 
-    // Send a request to update the user with the new data
-    axios
-      .put("http://localhost:3001/updateUser", {
+    try {
+      // Send a request to update the user with the new data
+      const result = await axios.put("http://localhost:3001/updateUser", {
         ...updatedData,
         id: location.state?.formData._id,
-      })
-      .then((result) => {
-        console.log(result);
-        // Navigate back to the products page with updated data
-        navigate("/products", {
-          state: { barcode: updatedBarcode, formData: updatedData },
-        });
-      })
-      .catch((err) => console.log(err));
+      });
+
+      console.log("Update successful:", result.data);
+
+      // Navigate back to the products page with updated data
+      navigate("/products", {
+        state: { barcode: updatedBarcode, formData: updatedData },
+      });
+    } catch (err) {
+      console.error("Error updating user:", err);
+    }
   };
 
   return (

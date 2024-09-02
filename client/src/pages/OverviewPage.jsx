@@ -1,5 +1,3 @@
-// OverviewPage.jsx
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,11 +6,11 @@ const OverviewPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    product: "", // Changed from productName to product to match the backend
+    product: "",
   });
 
-  const [barcode, setBarcode] = useState(""); // State to manage the barcode
-  const navigate = useNavigate(); // Hook to navigate programmatically
+  const [barcode, setBarcode] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,13 +24,10 @@ const OverviewPage = () => {
     e.preventDefault();
     console.log("Form submitted:", formData);
 
-    // Generate barcode from product (or any other logic you have)
     const barcode = formData.product;
 
-    // Include barcode in the form data
     const userData = { ...formData, barcode };
 
-    // Send the request to create a user with the barcode
     axios
       .post("http://localhost:3001/createUser", userData)
       .then((result) => console.log(result))
@@ -40,9 +35,8 @@ const OverviewPage = () => {
   };
 
   const generateBarcode = () => {
-    setBarcode(formData.product); // Generate barcode from product name
+    setBarcode(formData.product);
 
-    // Navigate to ProductPage and pass barcode data and formData
     navigate("/products", {
       state: { barcode: formData.product, formData },
     });
@@ -51,13 +45,11 @@ const OverviewPage = () => {
   return (
     <div className="flex justify-center items-center h-full w-full">
       <div className="flex w-[70%] mt-10 p-6 bg-gray-800 rounded-lg shadow-md">
-        {/* Form Section */}
         <div className="w-full">
           <h2 className="text-2xl font-bold text-white mb-4">
             Generate Barcode
           </h2>
           <form onSubmit={handleSubmit}>
-            {/* Name Input */}
             <div className="mb-4">
               <label
                 className="block text-sm font-medium text-white mb-2"
@@ -77,7 +69,6 @@ const OverviewPage = () => {
               />
             </div>
 
-            {/* Email Input */}
             <div className="mb-4">
               <label
                 className="block text-sm font-medium text-white mb-2"
@@ -97,7 +88,6 @@ const OverviewPage = () => {
               />
             </div>
 
-            {/* Product Name Input */}
             <div className="mb-4">
               <label
                 className="block text-sm font-medium text-white mb-2"
@@ -117,7 +107,6 @@ const OverviewPage = () => {
               />
             </div>
 
-            {/* Buttons */}
             <div className="flex gap-4">
               <button
                 type="submit"
