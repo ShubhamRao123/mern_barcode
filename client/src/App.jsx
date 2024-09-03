@@ -1,9 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-// import OverviewPage from "./pages/OverviewPage";
-// import ProductPage from "./pages/ProductPage";
 import Navbar from "./component/Navbar";
-import SIdebar from "./component/SIdebar";
-// import UpdatePage from "./pages/UpdatePage";
+import Sidebar from "./component/SIdebar"; // Correct the import spelling for Sidebar
 import Receiver from "./pages/Receiver";
 import Sender from "./pages/Sender";
 import Shipment from "./pages/Shipment";
@@ -12,6 +9,8 @@ import Rightbar from "./component/Rightbar";
 import { ProgressProvider } from "./component/ProgressContext";
 import BarcodePage from "./pages/BarcodePage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import Login from "./pages/Login";
+import SignUp from "./pages/Signup";
 
 const App = () => {
   return (
@@ -20,22 +19,25 @@ const App = () => {
         <Navbar />
 
         <div className="flex flex-grow">
-          <div className=" bg-gray-800 h-full">
-            <SIdebar />
+          {/* Sidebar */}
+          <Sidebar />
+
+          {/* Main content area */}
+          <div className="flex-grow flex flex-col overflow-y-auto">
+            <Routes>
+              <Route path="/" element={<SignUp />} />
+              <Route path="/sender" element={<Sender />} />
+              <Route path="/analytics" element={<AnalyticsPage />} />
+              <Route path="/receiver" element={<Receiver />} />
+              <Route path="/shipment" element={<Shipment />} />
+              <Route path="/tracking" element={<Tracking />} />
+              <Route path="/barcode" element={<BarcodePage />} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
           </div>
 
-          <Routes>
-            <Route path="/" element={<Sender />} />
-            <Route path="/analytics" element={<AnalyticsPage />} />
-            {/* <Route path="/overview" element={<OverviewPage />} /> */}
-            {/* <Route path="/products" element={<ProductPage />} /> */}
-            <Route path="/receiver" element={<Receiver />} />
-            <Route path="/shipment" element={<Shipment />} />
-            <Route path="/tracking" element={<Tracking />} />
-            {/* <Route path="/update" element={<UpdatePage />} /> */}
-            <Route path="/barcode" element={<BarcodePage />} />
-          </Routes>
-          <div className=" bg-gray-800 h-full">
+          {/* Rightbar */}
+          <div className="bg-gray-800 w-16 lg:w-56 xl:w-60 h-full">
             <Rightbar />
           </div>
         </div>

@@ -55,11 +55,13 @@ const AnalyticsPage = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full bg-gray-800 p-6">
-      <div className="flex-1 overflow-y-auto">
+    <div className="flex flex-col h-screen w-full bg-gray-800 p-4 sm:p-6">
+      <div className="flex-1 overflow-y-auto scroll-smooth">
         <div className="flex flex-col items-center h-full w-full bg-gray-800 rounded-lg shadow-md">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-white mb-4">Analytics</h2>
+          <div className="mb-4 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">
+              Analytics
+            </h2>
             {trackings.length > 0 ? (
               <div className="space-y-4">
                 {trackings.map((tracking) => {
@@ -75,35 +77,37 @@ const AnalyticsPage = () => {
                   return (
                     <div
                       key={tracking._id}
-                      className="p-4 bg-gray-700 rounded-lg"
+                      className="p-3 bg-gray-700 rounded-lg"
                     >
-                      <p>
-                        <strong>Tracking ID:</strong> {tracking.trackingId}
-                      </p>
-                      <p>
-                        <strong>Sender:</strong> {sender.name || "N/A"} (
-                        {sender.email || "N/A"})
-                      </p>
-                      <p>
-                        <strong>Receiver:</strong> {receiver.name || "N/A"} (
-                        {receiver.email || "N/A"})
-                      </p>
-                      <p>
-                        <strong>Shipment:</strong>{" "}
-                        {shipment.shipmentName || "N/A"}
-                      </p>
-                      <div
-                        ref={entryRefs.current[tracking._id]}
-                        className="mt-2"
-                      >
-                        <Barcode value={tracking.trackingId} />
+                      <div className="transform hover:scale-105 hover:shadow-lg transition-transform duration-300 ease-out">
+                        <p className="text-sm sm:text-base text-white">
+                          <strong>Tracking ID:</strong> {tracking.trackingId}
+                        </p>
+                        <p className="text-sm sm:text-base text-white">
+                          <strong>Sender:</strong> {sender.name || "N/A"} (
+                          {sender.email || "N/A"})
+                        </p>
+                        <p className="text-sm sm:text-base text-white">
+                          <strong>Receiver:</strong> {receiver.name || "N/A"} (
+                          {receiver.email || "N/A"})
+                        </p>
+                        <p className="text-sm sm:text-base text-white">
+                          <strong>Shipment:</strong>{" "}
+                          {shipment.shipmentName || "N/A"}
+                        </p>
+                        <div
+                          ref={entryRefs.current[tracking._id]}
+                          className="mt-2"
+                        >
+                          <Barcode value={tracking.trackingId} />
+                        </div>
                       </div>
-                      <div className="mt-2 flex space-x-4">
+                      <div className="mt-2 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
                         <button
                           onClick={() =>
                             handleDownloadPNG(entryRefs.current[tracking._id])
                           }
-                          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                          className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm sm:text-base"
                         >
                           Download PNG
                         </button>
@@ -111,13 +115,13 @@ const AnalyticsPage = () => {
                           onClick={() =>
                             handleDownloadPDF(entryRefs.current[tracking._id])
                           }
-                          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                          className="px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm sm:text-base"
                         >
                           Download PDF
                         </button>
                         <button
                           onClick={() => handleDelete(tracking._id)}
-                          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                          className="px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm sm:text-base"
                         >
                           Delete
                         </button>
@@ -127,7 +131,9 @@ const AnalyticsPage = () => {
                 })}
               </div>
             ) : (
-              <p className="text-white">No tracking data available</p>
+              <p className="text-white text-center">
+                No tracking data available
+              </p>
             )}
           </div>
         </div>

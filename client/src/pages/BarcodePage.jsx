@@ -71,11 +71,13 @@ const BarcodePage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-full w-full">
-      <div className="flex w-[70%] mt-10 p-6 bg-gray-800 rounded-lg shadow-md">
+    <div className="flex justify-center items-center min-h-screen px-4 py-6 sm:px-8">
+      <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-2xl mt-10 p-4 bg-gray-800 rounded-lg shadow-md">
         <div className="w-full text-white">
-          <h2 className="text-2xl font-bold mb-4">Barcode</h2>
-          <div ref={barcodeRef} className="mb-4">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center">
+            Barcode
+          </h2>
+          <div ref={barcodeRef} className="mb-4 flex justify-center">
             {barcodeData ? (
               <Barcode
                 value={barcodeData}
@@ -87,26 +89,26 @@ const BarcodePage = () => {
                 lineColor="#000000"
               />
             ) : (
-              <div>No Barcode to display</div>
+              <div className="text-center">No Barcode to display</div>
             )}
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row justify-center items-center">
             <button
               onClick={handleDownloadPNG}
-              className="px-4 py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700 transition-colors"
+              className="w-full sm:w-auto max-w-xs px-4 py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700 transition-colors"
             >
               Download PNG
             </button>
             <button
               onClick={handleDownloadPDF}
-              className="px-4 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition-colors"
+              className="w-full sm:w-auto max-w-xs px-4 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition-colors"
             >
               Download PDF
             </button>
             {/* Uncomment if you want to use the save functionality */}
             {/* <button
               onClick={handleSaveBarcode}
-              className="px-4 py-2 bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700 transition-colors"
+              className="w-full sm:w-auto max-w-xs px-4 py-2 bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700 transition-colors"
             >
               Save and Generate Barcode
             </button> */}
